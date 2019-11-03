@@ -1,0 +1,141 @@
+pyBev - Daily BevAl updates with Python
+
+Compiler:
+	https://pyinstaller.readthedocs.io/en/stable/usage.html
+	
+	Jay gave the go-ahead to download that missing DLL, when you have time get to it
+	
+---Program Goals---
+
+0. save backup of current BAM on Mondays
+1. automatically obtain most recent data from spotfire/sql database
+2. either create a pivot table or slice the data in python, then import it to the spotfire column in BAM
+3. compare the spotfire column to the present week column (or perhaps input week, for mondays), automatically updating blank issue types and "?"s, while leaving nonzero issue types but concatenating them with a notifier that the MCAP data has been fixed
+4. update all expected dates (if step 1 works, this can be done based on end date)
+4. create a new column on Monday and autofill with 0s
+5. produce list of retmkts that warrant investigation
+6. for AC scrapes, check scraping status for last scrapeday, then see if W:\ is full, open folder if it is
+7. for AC client, check circular status and notify user of progress on the circ_id
+8. for insert/paper, check the last package delivered from mcap database and index status
+
+---Project Stages---
+Stage 1: Spotfire/Database query (get data to feed into column comparison)
+
+Stage 2: Column Comparison (compare columns and return list of problems)
+
+Stage 3: AC Database query (checking AC for P1 and P2 problems)
+
+Stage 4: MCAP Database query (check MT for paper/insert and JA problems)
+
+Stage 5: Report (produce a report for the user to investigate)
+
+---Stage progress---
+>>>All-stage info
+Packages to use:
+	xlwings
+	numpy
+	pandas
+	datetime
+	? csv
+
+>>>Stage 1: Spotfire/Database query (get data to feed into column comparison)
+
+	1-0. Run MCAP Pull blackbox batch file to get a csv
+	
+	
+		Query database with these parameters:
+		Filters:
+			Date Range: YTD (1/1/YYYY - today)
+			Status.Descrip: QCC, Indexed, Review, Duplicate, Wrong Version 
+							(a different csv for each status, preferably)
+		Columns:
+			Ret.Descrip
+			Mkt.Descrip
+			RetMktConcatenated
+			VehicleId
+			WeekOf
+			EndDt
+	
+	1-1. ask user for mcap.csv and metrics.xlsx file paths
+	
+	1-2. create metrics objects and extract data
+	
+	1-3. pivot mcap.df and connect to the metrics workbook so the user can see the live updates
+	
+	1-4. request week_date and fill the volatile column on loop until user ends
+		
+>>>Stage 2: Date
+
+	ask for the active date
+	
+>>>Stage 3: Mapping
+
+	maps mcap data to metrics for the given active date
+	
+>>>Stage 4: Column Comparison
+
+		metrics.df.columns and ts.df.columns
+		
+		[week_date] = A		['Spotfire Data'] = B	['Exp. Date'] = C	['Exp. Lag'] = D
+		['End Date'] = E	['Issues'] = F			['Media'] = G		['Phase'] = H
+		
+		assume A to mean A(i)
+			
+	2-1. sort by C ascending and run a basic update on metrics.df
+	
+		2-1a. filter:
+	
+				week_date <= C < week_date + timedelta(7 days)
+					on Monday, include C = blank
+				
+				type(A) is int
+	
+		2-1b. naive update:
+				
+				if B = #N/A
+					C = 'None': A = 'ND'
+					C = blank: A = 'ND'
+					type(C) is datetime: C = blank, A = 'ND' # ad hoc drops
+				
+				if A = 0 or #N/A: A = B
+				
+				if B - A > 0: A = B
+		
+		2-1c. duplicate checking:
+				
+				if B - A < 0: A = B, add retmkt and YTD mode to dupe dict
+		
+		2-1d. identify problems:
+				
+				if A = 0: A = '?'
+	
+	2-2. create troubleshooter object
+	
+	2-3. handle resolved issues with troubleshooter
+	
+		2-3a. Duplicates:
+		
+			iterate through dupe dict and generate report items for each pairing
+			
+		2-3b. type(A) is not int
+		
+			if B > 0: generate report
+			
+	2-4. begin stage 3-4 troubleshooting
+	
+	2-5. 
+
+
+>>>Stage 5: Troubleshooting/Ticket creation
+	
+	have a csv of issue contacts (Jenn for AC P1, for example) that can be read for recommended solutions
+	
+	need to rethink how status list is handled, right now it searches for 'Z:\date_Scraped_Beval' and 
+	throws an error. Should likely split status into the status functions and run all of them on both
+	resolved and unresolved lists.
+
+
+
+---Feature ideas---
+if last ad end-date was 30 days ago or more, mark it for activity review
+Add negative lag to early-processed ads

@@ -1,0 +1,142 @@
+PyBev Metrics Report
+Panel: XXXXXX # BevAl, Non-Flash, Puerto Rico, Email etc.
+Scan initiated: YYYY-MM-DD hh:mm:ss
+Items resolved: 3
+Items unresolved: 7
+-----Contents-----
+
+==Resolved Issues==
+===Duplicates===
+	R-D-1 Retailer - Market - Expected Ad Date
+===Insert/Paper===
+	R-IP-1 Retailer - Market - Expected Ad Date
+===Phase 1 Scrape===
+	None # R-P1S-X
+===Phase 1 Client===
+	None # R-P1C-X
+===Phase 2 Scrape===
+	R-P2S-1 Retailer - Market - Expected Ad Date
+
+==Unresolved Issues==
+===Duplicates===
+	U-D-1 Retailer - Market - Expected Ad Date
+===Insert/Paper===
+	U-IP-1 Retailer - Market - Expected Ad Date
+	U-IP-2 Retailer - Market - Expected Ad Date
+	U-IP-3 Retailer - Market - Expected Ad Date
+===Phase 1 Scrape===
+	U-P1S Retailer - Market - Expected Ad Date
+===Phase 1 Client===
+	None
+===Phase 2 Scrape===
+	U-P2S-1 Retailer - Market - Expected Ad Date
+===JA DL===
+	U-JA-1 Retailer - Market - Expected Ad Date
+
+
+-----Item Details-----
+
+==Resolved Issues==
+===Duplicates===
+R-D-1 Retailer - Market - Expected Ad Date
+	Ads present: 7/1 # actual/expected, expected = mode of YTD
+	Status: 1 QC Complete, 6 Duplicate
+	VID: 6612212,1234674,120398,983642,238461,2342361... # comma delimited list
+	Known issue: None
+
+===Insert/Paper===
+R-IP-1 Retailer - Market - Expected Ad Date
+	Ads present: 1/1
+	Days overdue: 2 # today's date - expdt
+	Status: 1 QC Complete
+	VID: 6612344
+	Known issue: DD Bergen Record is late this week # the text from column F
+
+===Phase 1 Scrape===
+None
+
+===Phase 1 Client===
+None
+
+===Phase 2 Scrape===
+R-P2S-1 Retailer - Market - Expected Ad Date # Ad didn't ingest originally, but has been manually done
+	Ads present: 1/1
+	Days overdue: 1
+	Status: 1 QC Complete
+	VID: 7262833
+	Known issue: JIRA ATM-2772
+
+
+==Unresolved Issues==
+===Duplicates===
+U-D-1 Retailer - Market - Expected Ad Date # this retailer dropped two ads for a holiday
+	Ads present: 2/1
+	Status: 2 QC Complete
+	VID: 2384972,2389472
+	Known issue: None
+	Recommended action: Confirm unique ads
+
+===Insert/Paper===
+U-IP-1 Retailer - Market - Expected Ad Date # this ad was indexed but not QC'd on time
+	Ads present: 0/1
+	Days overdue: 1
+	Status: 1 Indexed
+	VID: 6612344
+	Known issue: None
+	Recommended action: Contact QCer
+
+U-IP-2 Retailer - Market - Expected Ad Date # we normally get 2 ads, but this week we only recieved one
+	Ads present: 1/2
+	Days overdue: 2
+	Status: 1 QC Complete
+	VID: 3421127
+	Known issue: None
+	Recommended action: Communicate with processing team
+	
+U-IP-3 Retailer - Market - Expected Ad Date # the package is late
+	Ads present: 0/1
+	Days overdue: 4
+	Status: None
+	Last package received: 6/25/2017 # if no vehicles are present, check package report for last arrival
+	Known issue: None
+	Recommended action: Contact sender
+	
+===Phase 1 Scrape===
+U-P1S-1 Retailer - Market - Expected Ad Date
+	Ads present: 0/1
+	Days overdue: 2
+	Status: None # if there's no MCAP item, proceed to AC checks
+	StoreID: 1234 # get from Address Mapping
+	AC Circular Status: Finished Cropping
+	Known issue: None
+	Recommended action: Contact Jenn Page or Stacy-Ann Staples
+	
+U-P1S-2 Retailer - Market - Expected Ad Date
+	Ads present: 0/1
+	Days overdue: 4
+	Status: None
+	StoreID: 2348
+	AC Circular Status: None
+	Last successful scrape: MM/DD/YYYY
+	Scrape directory:
+		\\ecrmfs.ad.adcomparisons.com\ECRMAdComparisons\ECRM Ad Comparisons\WebScrapedAds\07 July 2017\07-03-17\US\
+	Recommended action: Check if scrape has correct weekdate, manually rescrape if required
+	
+===Phase 1 Client===
+None
+
+===Phase 2 Scrape===
+U-P2S-1 Retailer - Market - Expected Ad Date
+	Ads present: 0/1
+	Days overdue: 1
+	Status: None
+	Last successful scrape: MM/DD/YYYY # scrape is before the expected ad date
+	Recommended action: Manually scrape the ad and wait for ingestion
+
+===JA DL===
+U-JA-1 Retailer - Market - Expected Ad Date
+	Ads present: 0/1
+	Days overdue: 3
+	Status: None
+	Website: www.foobar.com
+	Recommended action: Check site for new ad and notify Janet Lewis

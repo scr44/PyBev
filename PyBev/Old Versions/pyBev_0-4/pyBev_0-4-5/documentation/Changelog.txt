@@ -1,0 +1,98 @@
+Changelog:
+0.4.5
+-added in monthly/bimonthly non drop behavior
+-tweaked ad hoc behavior, now pads the update time a few days
+ to allow for QCing of ad hoc ads
+-OOB retmkts that update now report "New Drop" in the
+ issue column
+-added bass module, checks can now be done from within
+-volatile column now fills with 0s upon program close
+-added BASS functions to colcomp (late_added_items and 
+ late_removed_items)
+-changed bimonthly/monthly behavior to avoid date creep
+-updated main menu to show the active sheet of workbook
+-metrics object now contains panel & sheetname information
+-BAM now contains Circulars, ROP, and Flash sheets
+-new column function works as intended on mondays
+-rewrote datecheck module
+-Archival now checks every day instead of mondays only; still
+ archives 1/wk though
+-Rearranged extraction methods to use the sheet name to pull
+ the desired metrics data
+
+0.4.4
+-lots of progress on troubleshooting module in unit tests
+-monday new column function works but functionality is changing
+ to run every time the program is run, in the next version
+
+0.4.3
+-duplicate tickets working but need to merge all non-QC data into
+ one file
+
+0.4.2
+-duplicate ticket creation seems to be working, but can't properly
+ test it until APIMA fixes the duplicate MCAP pulls
+-more main menu tweaks
+-monday archival works
+-monday new column function added, not working, VBA errors
+-cleaned up datecheck module to get rid of 'end' commands
+
+0.4.1
+-built ticket system framework
+-rewrote and expanded main menu system
+-reassigned stages
+-troubleshooting is now a module instead of object
+-strategy is building tickets in the module "factory" and sending
+ them to the report object
+
+0.4.0
+-column sorting now works
+-automatic monday updates built, haven't tested yet
+-troubleshooter object ready for initial testing
+
+0.3.1
+-completely new main menu
+-can now trigger stages at will
+-stage 3 complete (though still in alpha testing)
+	checks for pending, missing, and non-drops
+	checks ad hocs for a drop every week
+	updates naive data and end dates
+	identifies problems
+-first attempts at compiling with pyinstaller have been a dismal
+ failure, but hopefully the problem can be fixed (waiting on IT)
+
+0.2.3
+-column comparison now works
+-auto-updates trivial/naive values (0 to non-zero)
+-detects Pending status and fills in
+-detects missing ads and labels '?' for further troubleshooting
+-reworked the 'default' behavior of the datecheck module, now 
+ uses 'end' commands
+-automatic MCAP pull set up and fully functional
+-stage 1 and 2 complete (can still use editing in the future of course)
+
+0.2.2
+-added filter safe option for metrics updating
+-constructed framework for column comparison
+-troubleshooting object added
+
+0.2.1
+-completely rewrote existing code
+-now structured with modules, classes, and namespaces
+-four main modules right now: datecheck, indexcheck,
+ metricsobj, and colcomp
+-a few bugs left but the code mostly works to perform all of
+ stage 1 (considering the spotpull as stage 0)
+
+0.1.3
+-Rewrote code & cleaned functions
+-wrote better in-script documentation
+-added looping spotfire pull function
+
+0.1.2
+-now automatically loads up the data, pivots it, and writes a
+ given weeksago to the 'Spotfire Data' column of the BAM
+
+0.1.1
+-can now read spotfire's UTF-16 LE BOM csv outputs into pandas DF
+-automated pivot table creation in Stage 1
